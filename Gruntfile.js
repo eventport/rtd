@@ -8,6 +8,7 @@
         CUSTOM_RTD_CONFIG_FILE = PROJECT_BASE_PATH + '/test/rtd.conf.js',
         http = require('http'),
         fs = require('fs'),
+      path = require('path'),
         growl = require('growl'),
         libnotify = require('libnotify'),
         rtdConf = require(fs.existsSync(CUSTOM_RTD_CONFIG_FILE) ? CUSTOM_RTD_CONFIG_FILE : DEFAULT_RTD_CONFIG_FILE);
@@ -165,7 +166,7 @@
             relativeToProjectBase;
 
         viaOption = grunt.option('settingsPath');
-        settingsPath = viaOption || (PROJECT_BASE_PATH + '/' + appPath + '/settings.json');
+      settingsPath = path.resolve(__dirname, viaOption) || (PROJECT_BASE_PATH + '/' + appPath + '/settings.json');
         fileExists = fs.existsSync(settingsPath);
 
         if (viaOption && !fileExists) {
@@ -247,17 +248,11 @@
             watch: {
                 files: [
                     '<%= basePath %>/test/unit/**/*.js',
-                    '<%= basePath %>/test/unit/**/*.coffee',
-                    '<%= basePath %>/test/rtd/lib/**/*.js',
-                    '<%= basePath %>/test/rtd/lib/**/*.coffee',
                     '<%= basePath %>/test/acceptance/**/*.js',
-                    '<%= basePath %>/test/acceptance/**/*.coffee',
                     '<%= basePath %>/test/features/**/*.js',
                     '<%= basePath %>/test/features/**/*.feature',
-                    '<%= basePath %>/test/features/**/*.coffee',
                     '<%= basePath %>/app/**/*',
-                    '<%= basePath %>/app/.meteor/*',
-                    '!<%= basePath %>/app/.meteor/local/**/*'
+                    '<%= basePath %>/app/.meteor/{packages,release}'
                 ],
                 tasks: watchTasks
             },
