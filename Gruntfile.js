@@ -166,7 +166,7 @@
       relativeToProjectBase;
 
     viaOption = grunt.option('settingsPath');
-    settingsPath = path.resolve(__dirname, viaOption) || (PROJECT_BASE_PATH + '/' + appPath + '/settings.json');
+    settingsPath = viaOption ? path.resolve(__dirname, viaOption) : (PROJECT_BASE_PATH + '/' + appPath + '/settings.json');
     fileExists = fs.existsSync(settingsPath);
 
     if (viaOption && !fileExists) {
